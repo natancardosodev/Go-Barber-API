@@ -5,7 +5,7 @@ class App {
     constructor() {
         this.server = express();
 
-        this.middle;
+        this.midd;
         this.routes();
     }
 
