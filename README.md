@@ -32,6 +32,20 @@ docker start postgres
 npm run dev
 ```
 
+## Migrations
+
+Criação de Migration
+
+```
+npx sequelize migration:create --name=create-users
+```
+
+Depois que configurar as migrations, execute-as com:
+```
+npx sequelize-cli db:migrate
+OU npm run migration
+```
+
 ## Extras
 
 Listar todos as imagens do docker
@@ -77,4 +91,9 @@ ESLint no VSCode: Instale a extensão `ESLint`. Dê `Ctrl+Shift+P`, pesquise JSO
         "autoFix": true
     },
 ]
+```
+Desfazer última migration
+```
+npx sequelize db:migrate:undo // undo:all
+OU npm run rm-migration
 ```
