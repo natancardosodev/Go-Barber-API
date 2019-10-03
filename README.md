@@ -52,12 +52,6 @@ Remover Container do Docker
 docker container rm <container_id>
 ```
 
-Iniciando um arquivo de config. do ESLint
-
-```
-./node_modules/.bin/eslint --init
-```
-
 ESLint no VSCode: Instale a extensão `ESLint`. Dê `Ctrl+Shift+P`, pesquise JSON, escolha `Open Settings` e coloque no fim do arquivo `settings.json`:
 
 ```
