@@ -190,6 +190,7 @@ fabric.properties
 
 # Imagens do sistema
 /temp/uploads/*
+!/temp/uploads/_gitkeep
 
 # Sonarlint plugin
 .idea/**/sonarlint/
