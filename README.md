@@ -72,7 +72,7 @@ ESLint no VSCode: Instale a extensão `ESLint`. Dê `Ctrl+Shift+P`, pesquise JSO
 "editor.rulers": [80, 120],
 "prettier.eslintIntegration": true,
 "eslint.autoFixOnSave": true,
-"editor.formatOnSave": true,
+"editor.formatOnSave": false,
 "eslint.validate": [
     {
         "language": "javascript",
