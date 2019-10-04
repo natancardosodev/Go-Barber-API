@@ -25,6 +25,16 @@ sudo snap install postbird
 
 Host: localhost // Port: 5433 // Username: postgres // Password: docker
 
+Instale um *Cliente REST*, como o [Insomnia](https://insomnia.rest/download/). Como configuração coloque abaixo em *Enviroment*. 
+
+```
+{
+  "base_url": "http://localhost:3333",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNTcwMjExOTQ2LCJleHAiOjE1NzA4MTY3NDZ9.CEv5WoxlcO8hk5XUFbFIFz9v-AbAzzsfk9OnF94OZGc"
+}
+```
+Obs.: As tags na base tem que ficar na cor roxa, para isso deve-se digitar as tags, espera aparecer e clicar nelas.
+
 ## Inicialização
 
 ```
@@ -45,6 +55,9 @@ Depois que configurar as migrations, execute-as com:
 npx sequelize-cli db:migrate
 OU npm run migration
 ```
+
+## Dados
+Criar usuário e realizar login. Demais rotas tem que colocar o token no Headers através de `Authorization` com valor `Bearer [token]`. O endpoint /files deve colocar o multipart `file` com o arquivo.
 
 ## Extras
 
