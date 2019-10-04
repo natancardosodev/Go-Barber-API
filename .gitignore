@@ -188,6 +188,9 @@ fabric.properties
 # .idea/misc.xml
 # *.ipr
 
+# Imagens do sistema
+/temp/uploads/*
+
 # Sonarlint plugin
 .idea/**/sonarlint/
 
