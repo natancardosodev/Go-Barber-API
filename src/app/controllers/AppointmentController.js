@@ -79,23 +79,35 @@ class ProviderController {
         }
 
         const appointment = await Appointment.create({
-            user_id: req.user_id,
+            user_id: req.userId,
             provider_id,
             date,
         });
 
         const user = await User.findByPk(req.userId);
         const formattedDate = format(
-            hourStart, "dddd ',dia' DD 'de' MMMM 'de' YYYY 'às' HH':'mm",
+            hourStart, "dd 'de' MMMM 'às' HH:mm",
             { locale: ptBR },
         );
 
         await Notification.create({
-            content: `Novo agendamento de ${user} para ${formattedDate}`,
+            content: `Novo agendamento de ${user.name} para ${formattedDate}`,
             user: provider_id,
         });
 
         return res.json(appointment);
+    }
+
+    async delete(req, res) {
+        const appointment = await Appointment.findByPk(req.params.id);
+
+        if (appointment.user_id !== req.userId) {
+            return res.status(401).json({
+                error: "You don't have permission to cancel this appointment",
+            });
+        }
+
+        return res.json();
     }
 }
 
