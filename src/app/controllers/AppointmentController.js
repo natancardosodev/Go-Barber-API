@@ -3,6 +3,7 @@ import {
     startOfHour, parseISO, isBefore, format,
 } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { subHours } from 'date-fns/esm';
 import Appointment from '../models/Appointment';
 import User from '../models/User';
 import File from '../models/File';
@@ -107,7 +108,19 @@ class ProviderController {
             });
         }
 
-        return res.json();
+        const dateWithSub = subHours(appointment.date, 2);
+
+        if (isBefore(dateWithSub, new Date())) {
+            return res.status(401).json({
+                error: 'You can only cancel appointments 2 hours in advance.',
+            });
+        }
+
+        appointment.canceled_at = new Date();
+
+        await appointment.save();
+
+        return res.json(appointment);
     }
 }
 
