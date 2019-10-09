@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import {
     startOfHour, parseISO, isBefore, format, subHours,
 } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { ptBR, pt } from 'date-fns/locale';
 import Appointment from '../models/Appointment';
 import User from '../models/User';
 import File from '../models/File';
@@ -140,7 +140,14 @@ class ProviderController {
             await Mail.sendMail({
                 to: `${appointment.provider.name} <${appointment.provider.email}>`,
                 subject: 'Agendamento cancelado',
-                text: 'Você tem um novo cancelamento',
+                template: 'cancellation',
+                context: {
+                    provider: appointment.provider.name,
+                    user: appointment.user.name,
+                    date: format(appointment.date, "'dia' dd 'de' MMMM', às' H:mm:'h'", {
+                        locale: pt,
+                    }),
+                },
             });
 
             return res.json(appointment);
