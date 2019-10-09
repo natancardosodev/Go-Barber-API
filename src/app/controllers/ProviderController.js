@@ -3,17 +3,21 @@ import File from '../models/File';
 
 class ProviderController {
     async index(req, res) {
-        const providers = await User.findAll({
-            where: { provider: true },
-            attributes: ['id', 'name', 'email', 'avatar_url'],
-            include: [{
-                model: File,
-                as: 'avatar',
-                attributes: ['name', 'path', 'url'],
-            }],
-        });
+        try {
+            const providers = await User.findAll({
+                where: { provider: true },
+                attributes: ['id', 'name', 'email', 'avatar_url'],
+                include: [{
+                    model: File,
+                    as: 'avatar',
+                    attributes: ['name', 'path', 'url'],
+                }],
+            });
 
-        return res.json(providers);
+            return res.json(providers);
+        } catch (error) {
+            return res.status(400).json(error);
+        }
     }
 }
 
