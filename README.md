@@ -5,6 +5,7 @@
 ```
 npm install
 docker run --name docker-postgres -e POSTGRES_PASSWORD=docker -p 5433:5432 -d postgres
+docker run --name redisbarber -p 6378:6379 -d -t redis:alpine
 ```
 
 Docker: Criar conta no [DockerHub](https://hub.docker.com/)
