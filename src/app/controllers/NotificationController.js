@@ -12,29 +12,21 @@ class NotificationController {
             return res.status(401).json({ error: 'Only provider can load notifications' });
         }
 
-        try {
-            const notifications = await Notification.find({
-                user: req.userId,
-            }).sort('createdAt').limit(20);
+        const notifications = await Notification.find({
+            user: req.userId,
+        }).sort('createdAt').limit(20);
 
-            return res.json(notifications);
-        } catch (error) {
-            return res.status(400).json(error);
-        }
+        return res.json(notifications);
     }
 
     async update(req, res) {
-        try {
-            const notifications = await Notification.findByIdAndUpdate(
-                req.params.id,
-                { read: true },
-                { new: true },
-            );
+        const notifications = await Notification.findByIdAndUpdate(
+            req.params.id,
+            { read: true },
+            { new: true },
+        );
 
-            return res.json(notifications);
-        } catch (error) {
-            return res.status(400).json(error);
-        }
+        return res.json(notifications);
     }
 }
 

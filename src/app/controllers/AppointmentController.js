@@ -14,33 +14,29 @@ class ProviderController {
     async index(req, res) {
         const { page = 1 } = req.query;
 
-        try {
-            const appointments = await Appointment.findAll({
-                where: { user_id: req.userId, canceled_at: null },
-                order: ['date'],
-                attributes: ['id', 'date', 'past', 'cancelable'],
-                limit: 20,
-                offset: (page - 1) * 20,
-                include: [
-                    {
-                        model: User,
-                        as: 'provider',
-                        attributes: ['id', 'name'],
-                        include: [
-                            {
-                                model: File,
-                                as: 'avatar',
-                                attributes: ['id', 'path', 'url'],
-                            },
-                        ],
-                    },
-                ],
-            });
+        const appointments = await Appointment.findAll({
+            where: { user_id: req.userId, canceled_at: null },
+            order: ['date'],
+            attributes: ['id', 'date', 'past', 'cancelable'],
+            limit: 20,
+            offset: (page - 1) * 20,
+            include: [
+                {
+                    model: User,
+                    as: 'provider',
+                    attributes: ['id', 'name'],
+                    include: [
+                        {
+                            model: File,
+                            as: 'avatar',
+                            attributes: ['id', 'path', 'url'],
+                        },
+                    ],
+                },
+            ],
+        });
 
-            return res.json(appointments);
-        } catch (error) {
-            return res.status(400).json(error);
-        }
+        return res.json(appointments);
     }
 
     async store(req, res) {
@@ -84,28 +80,24 @@ class ProviderController {
             return res.status(400).json({ error: 'Appointment date is not available' });
         }
 
-        try {
-            const appointment = await Appointment.create({
-                user_id: req.userId,
-                provider_id,
-                date,
-            });
+        const appointment = await Appointment.create({
+            user_id: req.userId,
+            provider_id,
+            date,
+        });
 
-            const user = await User.findByPk(req.userId);
-            const formattedDate = format(
-                hourStart, "dd 'de' MMMM 'às' HH:mm",
-                { locale: ptBR },
-            );
+        const user = await User.findByPk(req.userId);
+        const formattedDate = format(
+            hourStart, "dd 'de' MMMM 'às' HH:mm",
+            { locale: ptBR },
+        );
 
-            await Notification.create({
-                content: `Novo agendamento de ${user.name} para ${formattedDate}`,
-                user: provider_id,
-            });
+        await Notification.create({
+            content: `Novo agendamento de ${user.name} para ${formattedDate}`,
+            user: provider_id,
+        });
 
-            return res.json(appointment);
-        } catch (error) {
-            return res.status(400).json(error);
-        }
+        return res.json(appointment);
     }
 
     async delete(req, res) {
